@@ -20,14 +20,23 @@
     --line:#CEC6B5;
     --measure:35rem;
   }
-  *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  *{box-sizing:border-box;min-width:0}
+  html{
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+    scroll-behavior:smooth;overflow-x:hidden;
+  }
+  img,figure,svg{max-width:100%}
   body{
-    margin:0;background:var(--cream);color:var(--ink);
+    margin:0;width:100%;overflow-x:hidden;
+    background:var(--cream);color:var(--ink);
     font-family:"Inter",-apple-system,"Helvetica Neue",Arial,sans-serif;
     font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:54rem;margin:0 auto;padding:0 1.4rem}
+  .wrap{
+    max-width:54rem;margin:0 auto;width:100%;
+    padding-left:max(1.25rem, env(safe-area-inset-left));
+    padding-right:max(1.25rem, env(safe-area-inset-right));
+  }
   a{color:inherit}
   a:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
   .mono{
@@ -41,20 +50,20 @@
   .logo svg{width:.5em;height:1.1em;margin:0 -.04em;display:block}
 
   /* hero */
-  .hero{padding:5rem 0 3.2rem}
+  .hero{padding-top:5rem;padding-bottom:3.2rem}
   .hero h1{
     font-weight:900;font-size:clamp(2.3rem,7.6vw,4.2rem);line-height:1.02;
-    letter-spacing:-.045em;margin:.9rem 0 1.4rem;max-width:16ch;
+    letter-spacing:-.045em;margin:.9rem 0 1.4rem;max-width:16ch;overflow-wrap:break-word;
   }
   .hero h1 em{font-style:normal;color:var(--gold)}
   .hero p{max-width:var(--measure);font-size:1.14rem;margin:0}
 
   /* engine band */
   .engine{background:var(--ink);color:var(--paper)}
-  .engine .wrap{padding:4.4rem 1.4rem}
+  .engine .wrap{padding-top:4.4rem;padding-bottom:4.4rem}
   .engine .mono{color:var(--gold-lt)}
   .wordmark{
-    font-weight:900;font-size:clamp(2.6rem,9vw,4.6rem);letter-spacing:-.055em;
+    font-weight:900;font-size:clamp(2.3rem,8.4vw,4.6rem);letter-spacing:-.055em;overflow-wrap:break-word;
     line-height:1;margin:.8rem 0 1.5rem;
   }
   .wordmark span{color:var(--gold)}
@@ -72,7 +81,7 @@
 
   /* screenshots */
   .strip{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2.4rem;
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem;margin-top:2.4rem;
   }
   .strip figure{margin:0}
   .strip img{width:100%;height:auto;display:block;border:1px solid #34302A;border-radius:12px}
@@ -82,9 +91,9 @@
   .swipe{display:none}
 
   /* work */
-  .work{padding:4.6rem 0 4rem}
+  .work{padding-top:4.6rem;padding-bottom:4rem}
   h2.sec{font-weight:900;font-size:1.9rem;letter-spacing:-.035em;margin:.8rem 0 2.2rem}
-  .item{padding:1.9rem 0;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 2fr;gap:1.8rem}
+  .item{padding:1.9rem 0;border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:1.8rem}
   .item:last-of-type{border-bottom:1px solid var(--line)}
   .item h3{font-weight:900;font-size:1.28rem;letter-spacing:-.025em;margin:0 0 .35rem}
   .item p{margin:0;max-width:31rem}
@@ -99,7 +108,7 @@
 
   /* method */
   .method{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .method .wrap{padding:4.2rem 1.4rem}
+  .method .wrap{padding-top:4.2rem;padding-bottom:4.2rem}
   .lede{max-width:var(--measure);margin:.8rem 0 1.8rem;font-size:1.08rem}
   .qs{list-style:none;margin:0 0 3rem;padding:0;counter-reset:q}
   .qs li{
@@ -111,16 +120,16 @@
     content:counter(q,decimal-leading-zero);
     font-family:"JetBrains Mono",monospace;font-size:.7rem;font-weight:500;color:var(--gold);
   }
-  .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:1.9rem}
+  .rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.9rem}
   .rules h4{font-weight:900;font-size:1rem;letter-spacing:-.02em;margin:.6rem 0 .3rem}
   .rules p{margin:0;font-size:.95rem;color:#3E3931}
 
   /* founder + contact */
-  .founder{padding:4.6rem 0 .5rem}
+  .founder{padding-top:4.6rem;padding-bottom:.5rem}
   .founder h3{font-weight:900;font-size:1.5rem;letter-spacing:-.03em;margin:.7rem 0 .4rem}
   .founder p{max-width:var(--measure);margin:0 0 .9rem}
-  .contact{padding:2.2rem 0 4.6rem}
-  .contact h3{font-weight:900;font-size:clamp(1.55rem,4.4vw,2.25rem);letter-spacing:-.035em;margin:0 0 1.2rem;max-width:21ch}
+  .contact{padding-top:2.2rem;padding-bottom:4.6rem}
+  .contact h3{font-weight:900;font-size:clamp(1.45rem,5.2vw,2.25rem);letter-spacing:-.035em;margin:0 0 1.2rem;max-width:21ch;overflow-wrap:break-word}
   .cta{
     display:inline-block;font-weight:900;font-size:1.08rem;letter-spacing:-.02em;
     text-decoration:none;background:var(--ink);color:var(--paper);padding:.85rem 1.35rem;
@@ -129,7 +138,7 @@
   .addr{margin-top:1rem}
 
   footer{background:var(--ink);color:#8B8477}
-  footer .wrap{padding:2rem 1.4rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  footer .wrap{padding-top:2rem;padding-bottom:2rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   footer .mono{color:#8B8477}
 
   @media (max-width:780px){
@@ -137,17 +146,18 @@
     img.mini{max-width:8.5rem;margin-top:.9rem}
     .rules{grid-template-columns:1fr;gap:1.5rem}
     .strip{
-      display:flex;gap:.8rem;margin-top:1.9rem;
+      display:flex;gap:.7rem;margin-top:1.9rem;
+      width:100%;max-width:100%;
       overflow-x:auto;scroll-snap-type:x mandatory;
       -webkit-overflow-scrolling:touch;scrollbar-width:none;
-      margin-left:-1.4rem;margin-right:-1.4rem;padding:0 1.4rem;
+      padding-bottom:.2rem;
     }
     .strip::-webkit-scrollbar{display:none}
-    .strip figure{flex:0 0 54%;scroll-snap-align:start}
+    .strip figure{flex:0 0 56%;min-width:0;scroll-snap-align:start}
     .strip figcaption{font-size:.78rem;min-height:3.1rem}
     .swipe{display:block;margin:.4rem 0 0;padding:0;color:#8B8477;letter-spacing:.18em}
-    .hero{padding:3.6rem 0 2.6rem}
-    .work{padding:3.4rem 0}
+    .hero{padding-top:3.6rem;padding-bottom:2.6rem}
+    .work{padding-top:3.4rem;padding-bottom:3.4rem}
   }
   @media (prefers-reduced-motion:no-preference){
     .hero h1{animation:rise .65s cubic-bezier(.2,.7,.3,1) both}
