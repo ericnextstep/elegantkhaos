@@ -153,14 +153,38 @@
   }
   .founder h3{font-weight:900;font-size:1.5rem;letter-spacing:-.03em;margin:0 0 .4rem}
   .founder p{max-width:var(--measure);margin:0 0 .9rem}
-  .contact{padding-top:2.2rem;padding-bottom:4.6rem}
+  .contact{padding-top:3.2rem;padding-bottom:4.6rem}
   .contact h3{font-weight:900;font-size:clamp(1.45rem,5.2vw,2.25rem);letter-spacing:-.035em;margin:0 0 1.2rem;max-width:21ch;overflow-wrap:break-word}
   .cta{
     display:inline-block;font-weight:900;font-size:1.08rem;letter-spacing:-.02em;
     text-decoration:none;background:var(--ink);color:var(--paper);padding:.85rem 1.35rem;
   }
   .cta:hover{background:var(--gold);color:var(--ink)}
-  .addr{margin-top:1rem}
+  .contact .intro{max-width:var(--measure);margin:0 0 2rem;font-size:1.06rem}
+  .intake{max-width:var(--measure)}
+  .intake label{display:block;margin-bottom:1.35rem;font-weight:700;font-size:.98rem;letter-spacing:-.01em}
+  .intake label em{font-style:normal;color:var(--gold)}
+  .intake input,.intake textarea{
+    display:block;width:100%;margin-top:.5rem;
+    font-family:inherit;font-size:1rem;font-weight:400;color:var(--ink);
+    background:#FBF9F4;border:1px solid var(--line);border-radius:0;
+    padding:.7rem .8rem;resize:vertical;
+  }
+  .intake input::placeholder,.intake textarea::placeholder{color:#9A9182}
+  .intake input:focus,.intake textarea:focus{outline:2px solid var(--gold);outline-offset:0;border-color:var(--gold)}
+  .intake-actions{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-top:.4rem}
+  .intake-actions .cta{border:none;cursor:pointer;font-family:inherit}
+  .hint{margin:.9rem 0 0;line-height:1.6;text-transform:none;letter-spacing:.02em;font-size:.78rem}
+  .addr-row{display:flex;align-items:center;gap:.7rem;margin-top:2.4rem;padding-top:1.6rem;border-top:1px solid var(--line);flex-wrap:wrap}
+  .addr-link{color:var(--quiet);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+  .addr-link:hover{color:var(--ink);border-bottom-color:var(--ink)}
+  .copy{
+    font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--quiet);background:transparent;
+    border:1px solid var(--line);padding:.34rem .6rem;cursor:pointer;line-height:1;
+  }
+  .copy:hover{color:var(--ink);border-color:var(--ink)}
+  .copy:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
   footer{background:var(--ink);color:#8B8477}
   footer .wrap{padding-top:2rem;padding-bottom:2rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
@@ -338,10 +362,78 @@
   </div>
 </section>
 
-<section class="wrap contact">
+<section class="wrap contact" id="start">
+  <div class="mono">Start here</div>
   <h3>Have a problem where execution, not information, is the bottleneck?</h3>
-  <a class="cta" href="mailto:eric@elegantkhaos.com?subject=Project%20inquiry">Start a conversation</a>
-  <div class="mono addr">eric@elegantkhaos.com</div>
+  <p class="intro">Most ideas die in the spec. People refine the perfect version in their head for a year and never put anything in anyone's hands. Answer these five questions and I'll come back with something real to react to — not a proposal.</p>
+
+  <div class="intake">
+    <label>What should someone be able to do that they can't today?
+      <textarea id="q1" rows="2" placeholder="One sentence is enough."></textarea></label>
+
+    <label>Who is it for?
+      <input id="q2" type="text" placeholder="Be specific. &quot;Everyone&quot; is not a group."></label>
+
+    <label>What are they doing instead right now?
+      <input id="q3" type="text" placeholder="A spreadsheet, a notebook, nothing at all…"></label>
+
+    <label>If it shipped next month doing only <em>one</em> thing, what's the one thing?
+      <textarea id="q4" rows="2" placeholder="The hardest question here. Take your time."></textarea></label>
+
+    <label>How do I reach you?
+      <input id="q5" type="text" placeholder="Name, email, and a name for it if it has one."></label>
+
+    <div class="intake-actions">
+      <button class="cta" type="button" id="sendBtn">Send it to me</button>
+      <button class="copy mono" type="button" id="copyAll">Copy answers</button>
+    </div>
+    <p class="mono hint" id="hint">Opens your email with the answers filled in. Nothing is stored on this page.</p>
+  </div>
+
+  <div class="addr-row">
+    <a class="addr-link mono" href="mailto:eric@elegantkhaos.com?subject=Project%20inquiry">Or just email me — eric@elegantkhaos.com</a>
+    <button class="copy mono" type="button" id="copyBtn">Copy</button>
+  </div>
+
+  <script>
+    (function(){
+      var ADDR='eric@elegantkhaos.com';
+      var Q=[['q1','What should someone be able to do that they cannot today?'],
+             ['q2','Who is it for?'],
+             ['q3','What are they doing instead right now?'],
+             ['q4','If it shipped next month doing only one thing, what is the one thing?'],
+             ['q5','How do I reach you?']];
+      function body(){
+        return Q.map(function(p){
+          var v=(document.getElementById(p[0]).value||'').trim();
+          return p[1]+'\n'+(v||'(left blank)')+'\n';
+        }).join('\n');
+      }
+      function copy(text,btn,label){
+        function done(){var o=btn.textContent;btn.textContent=label;setTimeout(function(){btn.textContent=o;},1800);}
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(done,fb);
+        } else { fb(); }
+        function fb(){
+          var t=document.createElement('textarea');t.value=text;t.setAttribute('readonly','');
+          t.style.position='absolute';t.style.left='-9999px';document.body.appendChild(t);
+          t.select();try{document.execCommand('copy');done();}catch(e){}
+          document.body.removeChild(t);
+        }
+      }
+      document.getElementById('sendBtn').addEventListener('click',function(){
+        window.location.href='mailto:'+ADDR+'?subject='+encodeURIComponent('Project inquiry')+
+          '&body='+encodeURIComponent(body());
+        document.getElementById('hint').textContent='If nothing opened, use Copy answers and paste them into an email to '+ADDR;
+      });
+      document.getElementById('copyAll').addEventListener('click',function(){
+        copy(body(),this,'Copied');
+      });
+      document.getElementById('copyBtn').addEventListener('click',function(){
+        copy(ADDR,this,'Copied');
+      });
+    })();
+  </script>
 </section>
 
 <footer>
